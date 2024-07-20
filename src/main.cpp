@@ -1,5 +1,7 @@
+#include "Enemy.h"
 #include <iostream>
 #include <raylib.h>
+#include <raymath.h>
 
 const int screenWidth = 1000;
 const int screenHeight = 700;
@@ -18,23 +20,26 @@ const Camera2D camera = {
     0.0f,
     0.1f};
 
-void UpdateDrawFrame(void);
+// Vector2 enemyPos = {-2900, 2000};
+// const Vector2 enemySize = {100, 100};
+void UpdateDrawFrame(Enemy *enemy);
 
 int main(void) {
 
   std::cout << "Hello, World!" << std::endl;
 
+  Enemy *common = new Enemy(COMMON);
   InitWindow(screenWidth, screenHeight, "Idle Game");
   SetTargetFPS(60);
   while (!WindowShouldClose()) {
 
-    UpdateDrawFrame();
+    UpdateDrawFrame(common);
   }
 
   return 0;
 }
 
-void UpdateDrawFrame(void) {
+void UpdateDrawFrame(Enemy *enemy) {
 
   BeginDrawing();
 
@@ -46,12 +51,18 @@ void UpdateDrawFrame(void) {
 
   BeginMode2D(camera);
   DrawCircleLines(0, 0, 100, LIGHTGRAY);
-  DrawCircleLines(2900, 2900, 100, LIGHTGRAY);
-  DrawCircleLines(-2900, 2900, 100, LIGHTGRAY);
-  DrawCircleLines(2900, -2900, 100, LIGHTGRAY);
-  DrawCircleLines(-2900, -2900, 100, LIGHTGRAY);
 
   DrawRing({0, 0}, 990, 1010, 0, 360, 1, DARKGRAY);
+
+  DrawRectangleV(enemy->getPosition(), enemy->getSize(), enemy->getColor());
+  enemy->updatePosition();
+
+  // enemyPos = Vector2MoveTowards(enemyPos, {0 - 50, 0 - 50}, 5.0f);
+
+  // DrawCircleLines(2900, 2900, 100, LIGHTGRAY);
+  // DrawCircleLines(-2900, 2900, 100, LIGHTGRAY);
+  // DrawCircleLines(2900, -2900, 100, LIGHTGRAY);
+  // DrawCircleLines(-2900, -2900, 100, LIGHTGRAY);
   EndMode2D();
   EndDrawing();
 }
