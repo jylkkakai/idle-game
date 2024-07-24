@@ -20,8 +20,6 @@ const Camera2D camera = {
     0.0f,
     0.1f};
 
-// Vector2 enemyPos = {-2900, 2000};
-// const Vector2 enemySize = {100, 100};
 void UpdateDrawFrame(Enemy *enemy);
 
 int main(void) {
