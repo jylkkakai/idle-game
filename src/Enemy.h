@@ -1,16 +1,14 @@
 #ifndef ENEMY_H
 #define ENEMY_H
-#include "Game.h"
 #include "raylib.h"
+
+const int ENEMY_SIZE_X_COMMON = 100;
+const int ENEMY_SIZE_Y_COMMON = 100;
+enum class EnemyType { COMMON, FAST, HUGE, DESTROYED };
 
 class Enemy {
 public:
   Enemy(EnemyType type);
-  Enemy(Enemy &&) = default;
-  Enemy(const Enemy &) = default;
-  Enemy &operator=(Enemy &&) = default;
-  Enemy &operator=(const Enemy &) = default;
-  ~Enemy() = default;
 
   void updatePosition();
   Vector2 getPosition();

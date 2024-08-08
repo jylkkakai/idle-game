@@ -1,4 +1,4 @@
-#include "Enemy.h"
+#include "Game.h"
 #include <iostream>
 #include <raylib.h>
 #include <raymath.h>
@@ -20,25 +20,26 @@ const Camera2D camera = {
     0.0f,
     0.1f};
 
-void UpdateDrawFrame(Enemy *enemy);
+void UpdateDrawFrame(Game *game);
 
-int main(void) {
+int main() {
 
-  std::cout << "Hello, World!" << std::endl;
-
-  Enemy *common = new Enemy(COMMON);
+  Game *game = new Game();
+  // Enemy *common = new Enemy(EnemyType::COMMON);
   InitWindow(screenWidth, screenHeight, "Idle Game");
   SetTargetFPS(60);
   while (!WindowShouldClose()) {
 
-    UpdateDrawFrame(common);
+    UpdateDrawFrame(game);
+    game->update();
   }
 
   return 0;
 }
 
-void UpdateDrawFrame(Enemy *enemy) {
+void UpdateDrawFrame(Game *game) {
 
+  // std::cout << game->enemies.size() << std::endl;
   BeginDrawing();
 
   ClearBackground(RAYWHITE);
@@ -52,8 +53,15 @@ void UpdateDrawFrame(Enemy *enemy) {
 
   DrawRing({0, 0}, 990, 1010, 0, 360, 1, DARKGRAY);
 
-  DrawRectangleV(enemy->getPosition(), enemy->getSize(), enemy->getColor());
-  enemy->updatePosition();
+  for (auto i = 0; i < game->enemies.size(); i++) {
+    DrawRectangleV(game->enemies[i].getPosition(), game->enemies[i].getSize(),
+                   game->enemies[i].getColor());
+    game->enemies[i].updatePosition();
+  }
+  // for (auto enemy : game->enemies) {
+  //   DrawRectangleV(enemy.getPosition(), enemy.getSize(), enemy.getColor());
+  //   enemy.updatePosition();
+  // }
 
   // enemyPos = Vector2MoveTowards(enemyPos, {0 - 50, 0 - 50}, 5.0f);
 
