@@ -1,22 +1,18 @@
 #ifndef GAME_H
 #define GAME_H
 #include "Enemy.h"
-#include <cstddef>
+#include "Tower.h"
+// #include <cstddef>
 #include <vector>
 // #include "Tower.h"
 
-class Game {
-public:
-  Game();
-  ~Game();
+struct Game {
 
-  void update();
-
-  // Tower m_tower;
+  Tower tower;
   std::vector<Enemy> enemies;
-  // m_bullets;
+  // bullets;
 
-private:
-  std::size_t m_frameCounter;
+  void init();
+  void update();
 };
 #endif // !GAME_H

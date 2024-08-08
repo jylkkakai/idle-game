@@ -15,6 +15,7 @@ Enemy::Enemy(EnemyType type) : m_type(type) {
     m_type = EnemyType::COMMON;
     m_size.x = ENEMY_SIZE_X_COMMON;
     m_size.y = ENEMY_SIZE_Y_COMMON;
+    m_collisionRadius = float(ENEMY_SIZE_Y_COMMON) / 2;
     m_speed = 5.0f;
     m_color = YELLOW;
     break;
@@ -23,7 +24,7 @@ Enemy::Enemy(EnemyType type) : m_type(type) {
     break;
   }
 
-  int randVal = std::rand() % (6000 - ENEMY_SIZE_X_COMMON);
+  int randVal = rand() % (6000 - ENEMY_SIZE_X_COMMON);
   int side = randVal % 4;
 
   switch (side) {
@@ -51,10 +52,26 @@ Enemy::Enemy(EnemyType type) : m_type(type) {
 
 void Enemy::updatePosition() {
 
-  m_pos = Vector2MoveTowards(m_pos, {0 - 50, 0 - 50}, m_speed);
+  static int framesToRemove = 10;
+  if (m_type != EnemyType::DESTROYED) {
+    m_pos = Vector2MoveTowards(
+        m_pos, {0 - m_collisionRadius, 0 - m_collisionRadius}, m_speed);
+  } else {
+    if (framesToRemove <= 0) {
+      std::cout << framesToRemove << std::endl;
+      m_type = EnemyType::REMOVABLE;
+    }
+    framesToRemove--;
+  }
 }
 
 Vector2 Enemy::getPosition() { return m_pos; }
 Vector2 Enemy::getSize() { return m_size; }
+Vector2 Enemy::getCollisionPosition() {
+  return {m_pos.x + m_collisionRadius, m_pos.y + m_collisionRadius};
+}
+float Enemy::getCollisionRadius() { return m_collisionRadius; }
 float Enemy::getSpeed() { return m_speed; }
 Color Enemy::getColor() { return m_color; }
+EnemyType Enemy::getType() { return m_type; }
+void Enemy::setType(EnemyType type) { m_type = type; }

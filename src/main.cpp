@@ -1,3 +1,4 @@
+#include "Enemy.h"
 #include "Game.h"
 #include <iostream>
 #include <raylib.h>
@@ -24,14 +25,15 @@ void UpdateDrawFrame(Game *game);
 
 int main() {
 
-  Game *game = new Game();
+  Game game;
+  game.init();
   // Enemy *common = new Enemy(EnemyType::COMMON);
   InitWindow(screenWidth, screenHeight, "Idle Game");
   SetTargetFPS(60);
   while (!WindowShouldClose()) {
 
-    UpdateDrawFrame(game);
-    game->update();
+    UpdateDrawFrame(&game);
+    game.update();
   }
 
   return 0;
@@ -49,14 +51,24 @@ void UpdateDrawFrame(Game *game) {
   DrawRectangleLinesEx(arenaEdgeLine, 2.0f, GRAY);
 
   BeginMode2D(camera);
-  DrawCircleLines(0, 0, 100, LIGHTGRAY);
+  DrawCircleLines(game->tower.pos.x, game->tower.pos.y, game->tower.towerRadius,
+                  game->tower.towerColor);
 
-  DrawRing({0, 0}, 990, 1010, 0, 360, 1, DARKGRAY);
+  DrawRing({game->tower.pos.x, game->tower.pos.y},
+           game->tower.visionRadius - 10, game->tower.visionRadius + 10, 0, 360,
+           1, game->tower.visionRadiusColor);
 
   for (auto i = 0; i < game->enemies.size(); i++) {
-    DrawRectangleV(game->enemies[i].getPosition(), game->enemies[i].getSize(),
-                   game->enemies[i].getColor());
-    game->enemies[i].updatePosition();
+    if (game->enemies[i].getType() != EnemyType::DESTROYED) {
+      DrawRectangleV(game->enemies[i].getPosition(), game->enemies[i].getSize(),
+                     game->enemies[i].getColor());
+    } else {
+      DrawRectangleLinesEx(
+          {game->enemies[i].getPosition().x, game->enemies[i].getPosition().y,
+           game->enemies[i].getSize().x, game->enemies[i].getSize().y},
+          10.0, game->enemies[i].getColor());
+    }
+    // game->enemies[i].updatePosition();
   }
   // for (auto enemy : game->enemies) {
   //   DrawRectangleV(enemy.getPosition(), enemy.getSize(), enemy.getColor());

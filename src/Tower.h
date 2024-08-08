@@ -2,6 +2,16 @@
 #define TOWERWEAPON_H
 #include <raylib.h>
 
+struct Tower {
+  Vector2 pos;
+  float towerRadius;
+  Color towerColor;
+  float visionRadius;
+  Color visionRadiusColor;
+
+  int hp;
+};
+
 class TowerWeapon {
 public:
   TowerWeapon();
