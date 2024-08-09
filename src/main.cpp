@@ -1,8 +1,10 @@
 #include "Enemy.h"
 #include "Game.h"
+#include <cstring>
 #include <iostream>
 #include <raylib.h>
 #include <raymath.h>
+#include <string>
 
 const int screenWidth = 1000;
 const int screenHeight = 700;
@@ -51,6 +53,8 @@ void UpdateDrawFrame(Game *game) {
   DrawRectangleLinesEx(arenaEdgeLine, 2.0f, GRAY);
 
   BeginMode2D(camera);
+
+  // Tower
   DrawCircleLines(game->tower.pos.x, game->tower.pos.y, game->tower.towerRadius,
                   game->tower.towerColor);
 
@@ -58,6 +62,7 @@ void UpdateDrawFrame(Game *game) {
            game->tower.visionRadius - 10, game->tower.visionRadius + 10, 0, 360,
            1, game->tower.visionRadiusColor);
 
+  // Enemies
   for (auto i = 0; i < game->enemies.size(); i++) {
     if (game->enemies[i].getType() != EnemyType::DESTROYED) {
       DrawRectangleV(game->enemies[i].getPosition(), game->enemies[i].getSize(),
@@ -68,19 +73,11 @@ void UpdateDrawFrame(Game *game) {
            game->enemies[i].getSize().x, game->enemies[i].getSize().y},
           10.0, game->enemies[i].getColor());
     }
-    // game->enemies[i].updatePosition();
   }
-  // for (auto enemy : game->enemies) {
-  //   DrawRectangleV(enemy.getPosition(), enemy.getSize(), enemy.getColor());
-  //   enemy.updatePosition();
-  // }
 
-  // enemyPos = Vector2MoveTowards(enemyPos, {0 - 50, 0 - 50}, 5.0f);
+  DrawText(std::to_string(game->tower.hp).c_str(), 2000, -2900, 300, WHITE);
+  DrawText(std::to_string(game->cash).c_str(), -2900, -2900, 300, WHITE);
 
-  // DrawCircleLines(2900, 2900, 100, LIGHTGRAY);
-  // DrawCircleLines(-2900, 2900, 100, LIGHTGRAY);
-  // DrawCircleLines(2900, -2900, 100, LIGHTGRAY);
-  // DrawCircleLines(-2900, -2900, 100, LIGHTGRAY);
   EndMode2D();
   EndDrawing();
 }
