@@ -76,6 +76,20 @@ void UpdateDrawFrame(Game *game) {
     }
   }
 
+  // Bullets
+  for (auto i = 0; i < game->bullets.size(); i++) {
+    // if (game->bullets[i].getType() != EnemyType::DESTROYED) {
+    DrawCircleV(game->bullets[i].pos, game->bullets[i].radius,
+                game->bullets[i].color);
+    // } else {
+    //   DrawRectangleLinesEx(
+    //       {game->enemies[i].getPosition().x,
+    //       game->enemies[i].getPosition().y,
+    //        game->enemies[i].getSize().x, game->enemies[i].getSize().y},
+    //       10.0, game->enemies[i].getColor());
+    // }
+  }
+
   DrawText(std::to_string(game->tower.hp).c_str(), 2000, -2900, 300, WHITE);
   DrawText(std::to_string(game->cash).c_str(), -2900, -2900, 300, WHITE);
 

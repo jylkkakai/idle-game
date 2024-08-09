@@ -1,5 +1,6 @@
 #ifndef WEAPON_H
 #define WEAPON_H
+#include "Bullet.h"
 #include <raylib.h>
 
 class WeaponClickable {
@@ -12,6 +13,7 @@ public:
   int getDp();
   Vector2 getPos();
   Color getColor();
+  Bullet getBullet(Vector2 target);
 
 private:
   int m_dp = 1;

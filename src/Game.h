@@ -13,6 +13,7 @@ struct Game {
   Tower tower;
   std::vector<Enemy> enemies;
   WeaponClickable weapon;
+  std::vector<Bullet> bullets;
   // bullets;
 
   void init();
