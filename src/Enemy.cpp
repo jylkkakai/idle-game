@@ -17,7 +17,10 @@ Enemy::Enemy(EnemyType type) : m_type(type) {
     m_size.y = ENEMY_SIZE_Y_COMMON;
     m_collisionRadius = float(ENEMY_SIZE_Y_COMMON) / 2;
     m_speed = 5.0f;
+    m_framesToRemove = 10;
     m_color = YELLOW;
+    m_hp = 10;
+    m_drop = 2;
     break;
   default:
     assert(!"Unreachable!");
@@ -52,26 +55,38 @@ Enemy::Enemy(EnemyType type) : m_type(type) {
 
 void Enemy::updatePosition() {
 
-  static int framesToRemove = 10;
   if (m_type != EnemyType::DESTROYED) {
     m_pos = Vector2MoveTowards(
         m_pos, {0 - m_collisionRadius, 0 - m_collisionRadius}, m_speed);
   } else {
-    if (framesToRemove <= 0) {
-      std::cout << framesToRemove << std::endl;
+    if (m_framesToRemove <= 0) {
       m_type = EnemyType::REMOVABLE;
     }
-    framesToRemove--;
+    m_framesToRemove--;
   }
 }
 
-Vector2 Enemy::getPosition() { return m_pos; }
-Vector2 Enemy::getSize() { return m_size; }
 Vector2 Enemy::getCollisionPosition() {
   return {m_pos.x + m_collisionRadius, m_pos.y + m_collisionRadius};
 }
+
+void Enemy::hit(int hp) {
+  m_hp -= hp;
+  if (m_hp <= 0 && (m_type != EnemyType::REMOVABLE))
+    m_type = EnemyType::DESTROYED;
+}
+
+int Enemy::getDrop() {
+  int drop = m_drop;
+  m_drop = 0;
+  return drop;
+}
+
+Vector2 Enemy::getPosition() { return m_pos; }
+int Enemy::getHp() { return m_hp; }
+Vector2 Enemy::getSize() { return m_size; }
 float Enemy::getCollisionRadius() { return m_collisionRadius; }
 float Enemy::getSpeed() { return m_speed; }
 Color Enemy::getColor() { return m_color; }
 EnemyType Enemy::getType() { return m_type; }
-void Enemy::setType(EnemyType type) { m_type = type; }
+// void Enemy::setType(EnemyType type) { m_type = type; }
