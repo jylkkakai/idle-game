@@ -8,6 +8,7 @@
 
 struct Game {
 
+  int cash;
   Tower tower;
   std::vector<Enemy> enemies;
   // bullets;
