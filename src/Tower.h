@@ -3,13 +3,13 @@
 #include <raylib.h>
 
 struct Tower {
-  Vector2 pos;
-  float towerRadius;
-  Color towerColor;
-  float visionRadius;
-  Color visionRadiusColor;
+  Vector2 pos = {0, 0};
+  float towerRadius = 100.0;
+  Color towerColor = LIGHTGRAY;
+  float visionRadius = 1000.0;
+  Color visionRadiusColor = DARKGRAY;
 
-  int hp;
+  int hp = 50;
 };
 
 class TowerWeapon {

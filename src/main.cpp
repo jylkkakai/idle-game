@@ -26,6 +26,7 @@ const Camera2D camera = {
 void UpdateDrawFrame(Game *game);
 
 int main() {
+  // std::srand(time(NULL));
 
   Game game;
   game.init();

@@ -1,22 +1,12 @@
 #include "Game.h"
 #include "Enemy.h"
+#include "Weapon.h"
 #include "raylib.h"
 #include <iostream>
 #include <random>
 #include <time.h>
 
-void Game::init() {
-
-  std::srand(time(NULL));
-
-  cash = 0;
-  tower.hp = 50;
-  tower.pos = {0, 0};
-  tower.towerRadius = 100.0;
-  tower.towerColor = LIGHTGRAY;
-  tower.visionRadius = 1000.0;
-  tower.visionRadiusColor = DARKGRAY;
-}
+void Game::init() {}
 
 static int checkTowerCollision(const Tower &tower,
                                std::vector<Enemy> &enemies) {
@@ -39,6 +29,7 @@ void Game::update() {
   static int frameCounterMax = 30;
   static int enNum = 0;
   static int maxEnemies = 10;
+
   if (frameCounter == frameCounterMax && enNum < maxEnemies) {
 
     Enemy enemy(EnemyType::COMMON);
@@ -61,5 +52,6 @@ void Game::update() {
       it++;
     }
   }
+  weapon.update();
   frameCounter++;
 }
