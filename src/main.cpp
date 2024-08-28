@@ -64,33 +64,13 @@ void UpdateDrawFrame(Game *game) {
            1, game->tower.visionRadiusColor);
 
   // Enemies
-  for (auto i = 0; i < game->enemies.size(); i++) {
-    game->enemies[i].render();
-    // if (game->enemies[i].getType() != EnemyType::DESTROYED) {
-    //   DrawRectangleV(game->enemies[i].getPosition(),
-    //   game->enemies[i].getSize(),
-    //                  game->enemies[i].getColor());
-    // } else {
-    //   DrawRectangleLinesEx(
-    //       {game->enemies[i].getPosition().x,
-    //       game->enemies[i].getPosition().y,
-    //        game->enemies[i].getSize().x, game->enemies[i].getSize().y},
-    //       10.0, game->enemies[i].getColor());
-    // }
+  for (auto enemy : game->enemies) {
+    enemy.render();
   }
 
   // Bullets
-  for (auto i = 0; i < game->bullets.size(); i++) {
-    // if (game->bullets[i].getType() != EnemyType::DESTROYED) {
-    DrawCircleV(game->bullets[i].pos, game->bullets[i].radius,
-                game->bullets[i].color);
-    // } else {
-    //   DrawRectangleLinesEx(
-    //       {game->enemies[i].getPosition().x,
-    //       game->enemies[i].getPosition().y,
-    //        game->enemies[i].getSize().x, game->enemies[i].getSize().y},
-    //       10.0, game->enemies[i].getColor());
-    // }
+  for (auto bullet : game->bullets) {
+    DrawCircleV(bullet.pos, bullet.radius, bullet.color);
   }
 
   DrawText(std::to_string(game->tower.hp).c_str(), 2000, -2900, 300, WHITE);
