@@ -80,8 +80,7 @@ void Game::update() {
   int nearest =
       findNearestEnemyInsideVision(tower, enemies, tower.visionRadius);
   if (nearest >= 0 && weapon.isBulletReady()) {
-    bullets.push_back(
-        weapon.getBullet(enemies[nearest].getCollisionPosition()));
+    bullets.push_back(weapon.getBullet(enemies[nearest].getPosition()));
   }
 
   frameCounter++;

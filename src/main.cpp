@@ -65,15 +65,18 @@ void UpdateDrawFrame(Game *game) {
 
   // Enemies
   for (auto i = 0; i < game->enemies.size(); i++) {
-    if (game->enemies[i].getType() != EnemyType::DESTROYED) {
-      DrawRectangleV(game->enemies[i].getPosition(), game->enemies[i].getSize(),
-                     game->enemies[i].getColor());
-    } else {
-      DrawRectangleLinesEx(
-          {game->enemies[i].getPosition().x, game->enemies[i].getPosition().y,
-           game->enemies[i].getSize().x, game->enemies[i].getSize().y},
-          10.0, game->enemies[i].getColor());
-    }
+    game->enemies[i].render();
+    // if (game->enemies[i].getType() != EnemyType::DESTROYED) {
+    //   DrawRectangleV(game->enemies[i].getPosition(),
+    //   game->enemies[i].getSize(),
+    //                  game->enemies[i].getColor());
+    // } else {
+    //   DrawRectangleLinesEx(
+    //       {game->enemies[i].getPosition().x,
+    //       game->enemies[i].getPosition().y,
+    //        game->enemies[i].getSize().x, game->enemies[i].getSize().y},
+    //       10.0, game->enemies[i].getColor());
+    // }
   }
 
   // Bullets
