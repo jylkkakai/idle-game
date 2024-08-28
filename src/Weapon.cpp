@@ -1,7 +1,6 @@
 #include "Weapon.h"
 #include "raylib.h"
 #include <cstdlib>
-#include <iostream>
 
 bool WeaponClickable::isMouseOnArena() {
 
@@ -18,7 +17,6 @@ void WeaponClickable::update() {
   else
     SetMouseCursor(MOUSE_CURSOR_ARROW);
 
-  // if (m_isHovered && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
   m_bulletReady = (m_isHovered && IsMouseButtonPressed(MOUSE_BUTTON_LEFT));
 }
 
@@ -31,8 +29,6 @@ Bullet WeaponClickable::getBullet(Vector2 target) {
     dirr.x = target.x / std::abs(target.y) * 3000;
     dirr.y = (target.y > 0.0) ? 3000.0 : -3000.0;
   }
-  // std::cout << target.x << " " << target.y << " " << dirr.x << " " << dirr.y
-  //           << std::endl;
   Bullet bullet{1, {0, 0}, dirr, 20.0, 10.0, WHITE};
   return bullet;
 }
