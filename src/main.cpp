@@ -26,11 +26,10 @@ const Camera2D camera = {
 void UpdateDrawFrame(Game *game);
 
 int main() {
-  // std::srand(time(NULL));
+
+  std::srand(time(NULL));
 
   Game game;
-  game.init();
-  // Enemy *common = new Enemy(EnemyType::COMMON);
   InitWindow(screenWidth, screenHeight, "Idle Game");
   SetTargetFPS(60);
   while (!WindowShouldClose()) {
@@ -44,7 +43,6 @@ int main() {
 
 void UpdateDrawFrame(Game *game) {
 
-  // std::cout << game->enemies.size() << std::endl;
   BeginDrawing();
 
   ClearBackground(RAYWHITE);
