@@ -18,13 +18,15 @@ public:
   float getCollisionRadius();
   float getSpeed();
   Color getColor();
+  void render();
   void hit(int hp);
   int getDrop();
   EnemyType getType();
 
 private:
   EnemyType m_type;
-  int m_hp;
+  float m_maxHp;
+  float m_hp;
   Vector2 m_pos;
   Vector2 m_size;
   float m_collisionRadius;

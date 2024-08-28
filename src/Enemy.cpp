@@ -19,6 +19,7 @@ Enemy::Enemy(EnemyType type) : m_type(type) {
     m_speed = 5.0f;
     m_framesToRemove = 10;
     m_color = YELLOW;
+    m_maxHp = 10;
     m_hp = 10;
     m_drop = 2;
     break;
@@ -27,25 +28,26 @@ Enemy::Enemy(EnemyType type) : m_type(type) {
     break;
   }
 
-  int randVal = rand() % (6000 - ENEMY_SIZE_X_COMMON);
+  int randVal =
+      (rand() % (6000 - ENEMY_SIZE_X_COMMON)) + ENEMY_SIZE_X_COMMON / 2 - 3000;
   int side = randVal % 4;
 
   switch (side) {
   case 0: // top
-    m_pos.x = randVal - 3000;
-    m_pos.y = -3000;
+    m_pos.x = randVal;
+    m_pos.y = -3000 + ENEMY_SIZE_X_COMMON;
     break;
   case 1: // right
     m_pos.x = 3000 - ENEMY_SIZE_X_COMMON;
-    m_pos.y = randVal - 3000;
+    m_pos.y = randVal;
     break;
   case 2: // bottom
-    m_pos.x = randVal - 3000;
+    m_pos.x = randVal;
     m_pos.y = 3000 - ENEMY_SIZE_Y_COMMON;
     break;
   case 3: // left
-    m_pos.x = -3000;
-    m_pos.y = randVal - 3000;
+    m_pos.x = -3000 + ENEMY_SIZE_X_COMMON;
+    m_pos.y = randVal;
     break;
   default:
     assert(!"Unreachable!");
@@ -74,6 +76,20 @@ void Enemy::hit(int hp) {
   m_hp -= hp;
   if (m_hp <= 0 && (m_type != EnemyType::REMOVABLE))
     m_type = EnemyType::DESTROYED;
+}
+
+void Enemy::render() {
+
+  Vector2 renderSize{m_size.x * m_hp / m_maxHp, m_size.y * m_hp / m_maxHp};
+  Vector2 renderPos{m_pos.x - renderSize.x / 2, m_pos.y - renderSize.y / 2};
+  float lineThickness = 10.0;
+
+  if (m_type != EnemyType::DESTROYED) {
+    DrawRectangleV(renderPos, renderSize, m_color);
+  } else {
+    DrawRectangleLinesEx({renderPos.x, renderPos.y, renderSize.x, renderSize.y},
+                         lineThickness, m_color);
+  }
 }
 
 int Enemy::getDrop() {
