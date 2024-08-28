@@ -1,12 +1,7 @@
 #include "Enemy.h"
-// #include "Game.h"
 #include "raylib.h"
 #include <cassert>
-// #include <chrono>
-#include <iostream>
-// #include <random>
 #include <raymath.h>
-// #include <time.h>
 
 Enemy::Enemy(EnemyType type) : m_type(type) {
 
@@ -28,14 +23,14 @@ Enemy::Enemy(EnemyType type) : m_type(type) {
     break;
   }
 
-  int randVal =
-      (rand() % (6000 - ENEMY_SIZE_X_COMMON)) + ENEMY_SIZE_X_COMMON / 2 - 3000;
+  int randVal = (rand() % (6000 - ENEMY_SIZE_X_COMMON));
   int side = randVal % 4;
 
+  randVal = randVal + ENEMY_SIZE_X_COMMON / 2 - 3000;
   switch (side) {
   case 0: // top
     m_pos.x = randVal;
-    m_pos.y = -3000 + ENEMY_SIZE_X_COMMON;
+    m_pos.y = -3000 + ENEMY_SIZE_Y_COMMON;
     break;
   case 1: // right
     m_pos.x = 3000 - ENEMY_SIZE_X_COMMON;
@@ -68,10 +63,6 @@ void Enemy::updatePosition() {
   }
 }
 
-Vector2 Enemy::getCollisionPosition() {
-  return {m_pos.x + m_collisionRadius, m_pos.y + m_collisionRadius};
-}
-
 void Enemy::hit(int hp) {
   m_hp -= hp;
   if (m_hp <= 0 && (m_type != EnemyType::REMOVABLE))
@@ -82,9 +73,12 @@ void Enemy::render() {
 
   Vector2 renderSize{m_size.x * m_hp / m_maxHp, m_size.y * m_hp / m_maxHp};
   Vector2 renderPos{m_pos.x - renderSize.x / 2, m_pos.y - renderSize.y / 2};
-  float lineThickness = 10.0;
+  float lineThickness = 5.0;
 
   if (m_type != EnemyType::DESTROYED) {
+    DrawRectangleLinesEx(
+        {m_pos.x - m_size.x / 2, m_pos.y - m_size.y / 2, m_size.x, m_size.y},
+        lineThickness, m_color);
     DrawRectangleV(renderPos, renderSize, m_color);
   } else {
     DrawRectangleLinesEx({renderPos.x, renderPos.y, renderSize.x, renderSize.y},
@@ -105,4 +99,3 @@ float Enemy::getCollisionRadius() { return m_collisionRadius; }
 float Enemy::getSpeed() { return m_speed; }
 Color Enemy::getColor() { return m_color; }
 EnemyType Enemy::getType() { return m_type; }
-// void Enemy::setType(EnemyType type) { m_type = type; }

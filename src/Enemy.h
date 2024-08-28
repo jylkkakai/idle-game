@@ -14,7 +14,6 @@ public:
   int getHp();
   Vector2 getPosition();
   Vector2 getSize();
-  Vector2 getCollisionPosition();
   float getCollisionRadius();
   float getSpeed();
   Color getColor();
