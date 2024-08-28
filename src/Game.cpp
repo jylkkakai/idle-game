@@ -7,18 +7,15 @@
 #include <random>
 #include <time.h>
 
-void Game::init() {}
-
 static int checkTowerCollision(const Tower &tower,
                                std::vector<Enemy> &enemies) {
 
   int dp = 0;
-  for (auto it = enemies.begin(); it != enemies.end(); it++) {
-    if (CheckCollisionCircles(tower.pos, tower.towerRadius,
-                              it->getCollisionPosition(),
-                              it->getCollisionRadius())) {
-      dp = it->getHp();
-      it->hit(dp);
+  for (auto &enemy : enemies) {
+    if (CheckCollisionCircles(tower.pos, tower.towerRadius, enemy.getPosition(),
+                              enemy.getCollisionRadius())) {
+      dp = enemy.getHp();
+      enemy.hit(dp);
     }
   }
   return dp;
@@ -56,8 +53,19 @@ void Game::update() {
     frameCounterMax = rand() % 100 + 30;
   }
 
-  for (auto i = 0; i < enemies.size(); i++) {
-    enemies[i].updatePosition();
+  for (auto &enemy : enemies) {
+    enemy.updatePosition();
+  }
+
+  for (auto it1 = enemies.begin(); it1 != enemies.end(); it1++) {
+    for (auto it2 = bullets.begin(); it2 != bullets.end();) {
+      if (CheckCollisionCircles(it1->getPosition(), it1->getCollisionRadius(),
+                                it2->pos, it2->radius)) {
+        it1->hit(it2->dp);
+        bullets.erase(it2);
+      } else
+        it2++;
+    }
   }
 
   tower.hp -= checkTowerCollision(tower, enemies);
@@ -72,8 +80,8 @@ void Game::update() {
     }
   }
 
-  for (auto i = 0; i < bullets.size(); i++) {
-    bullets[i].updatePos();
+  for (auto &bullet : bullets) {
+    bullet.updatePos();
   }
 
   weapon.update();

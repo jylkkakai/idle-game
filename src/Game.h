@@ -3,9 +3,7 @@
 #include "Enemy.h"
 #include "Tower.h"
 #include "Weapon.h"
-// #include <cstddef>
 #include <vector>
-// #include "Tower.h"
 
 struct Game {
 
@@ -14,7 +12,6 @@ struct Game {
   std::vector<Enemy> enemies;
   WeaponClickable weapon;
   std::vector<Bullet> bullets;
-  // bullets;
 
   void init();
   void update();
