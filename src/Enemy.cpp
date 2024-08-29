@@ -3,7 +3,7 @@
 #include <cassert>
 #include <raymath.h>
 
-Enemy::Enemy(EnemyType type) : m_type(type) {
+Enemy::Enemy(EnemyType type, int level) : m_type(type) {
 
   switch (type) {
   case EnemyType::COMMON:
@@ -14,8 +14,8 @@ Enemy::Enemy(EnemyType type) : m_type(type) {
     m_speed = 5.0f;
     m_framesToRemove = 10;
     m_color = YELLOW;
-    m_maxHp = 10;
-    m_hp = 10;
+    m_maxHp = 10 * pow(1.1, level - 1);
+    m_hp = m_maxHp;
     m_drop = 2;
     break;
   default:
@@ -65,8 +65,10 @@ void Enemy::updatePosition() {
 
 void Enemy::hit(int hp) {
   m_hp -= hp;
-  if (m_hp <= 0 && (m_type != EnemyType::REMOVABLE))
+  if (m_hp <= 0 && (m_type != EnemyType::REMOVABLE)) {
     m_type = EnemyType::DESTROYED;
+    m_hp = 0.0;
+  }
 }
 
 void Enemy::render() {

@@ -7,15 +7,16 @@
 // #include <random>
 // #include <time.h>
 
-static int checkTowerCollision(const Tower &tower,
-                               std::vector<Enemy> &enemies) {
+static float checkTowerCollision(const Tower &tower,
+                                 std::vector<Enemy> &enemies) {
 
-  int dp = 0;
+  float dp = 0;
   for (auto &enemy : enemies) {
-    if (CheckCollisionCircles(tower.pos, tower.towerRadius, enemy.getPosition(),
+    if (enemy.getType() != EnemyType::DESTROYED &&
+        CheckCollisionCircles(tower.pos, tower.towerRadius, enemy.getPosition(),
                               enemy.getCollisionRadius())) {
       dp = enemy.getHp();
-      enemy.hit(dp);
+      enemy.hit(dp + 1.0);
     }
   }
   return dp;
@@ -46,7 +47,7 @@ void Game::Game::update() {
 
   // New enemies
   if (frameCounter >= frameCounterMax && numOfEnemies < maxEnemies) {
-    Enemy enemy(EnemyType::COMMON);
+    Enemy enemy(EnemyType::COMMON, currentLevel);
     enemies.push_back(enemy);
     numOfEnemies++;
     frameCounter = 0;
@@ -109,6 +110,7 @@ void Game::Game::resetLevel() {
   if (numOfEnemies == maxEnemies && enemies.empty() &&
       currentLevel > passedLevel) {
     passedLevel = currentLevel;
+    currentLevel++;
     std::cout << passedLevel << std::endl;
   }
   tower.hp = 50;

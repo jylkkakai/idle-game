@@ -9,7 +9,7 @@ struct Tower {
   float visionRadius = 1000.0;
   Color visionRadiusColor = DARKGRAY;
 
-  int hp = 50;
+  float hp = 50;
 };
 
 class TowerWeapon {

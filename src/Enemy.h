@@ -8,7 +8,7 @@ enum class EnemyType { COMMON, FAST, HUGE, DESTROYED, REMOVABLE };
 
 class Enemy {
 public:
-  Enemy(EnemyType type);
+  Enemy(EnemyType, int);
 
   void updatePosition();
   int getHp();

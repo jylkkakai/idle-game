@@ -54,9 +54,11 @@ void UpdateDrawFrame(Game::Game *game) {
     DrawCircleV(bullet.pos, bullet.radius, bullet.color);
   }
 
-  DrawText(std::to_string(game->tower.hp).c_str(), Game::gameArenaXMax * 2 / 3,
-           Game::gameArenaYMin + 100, 300, WHITE);
+  DrawText(std::to_string(int(game->tower.hp)).c_str(),
+           Game::gameArenaXMax - 500, Game::gameArenaYMin + 100, 300, WHITE);
   DrawText(std::to_string(game->cash).c_str(), Game::gameArenaXMin + 100,
+           Game::gameArenaYMin + 100, 300, WHITE);
+  DrawText(("Level " + std::to_string(game->currentLevel)).c_str(), -500,
            Game::gameArenaYMin + 100, 300, WHITE);
 
   EndMode2D();
