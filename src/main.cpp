@@ -6,31 +6,14 @@
 #include <raymath.h>
 #include <string>
 
-const int screenWidth = 1000;
-const int screenHeight = 700;
-const int arenaWidth = 600;
-const int arenaHeight = 600;
-const int topPadding = 50;
-const int leftPadding = 50;
-
-const Vector2 gameArenaLoc = {leftPadding, topPadding};
-const Vector2 gameArenaSize = {arenaWidth, arenaHeight};
-const Rectangle arenaEdgeLine = {leftPadding, topPadding, arenaWidth,
-                                 arenaHeight};
-const Camera2D camera = {
-    {int(arenaWidth / 2) + leftPadding, int(arenaHeight / 2) + topPadding},
-    {0, 0},
-    0.0f,
-    0.1f};
-
-void UpdateDrawFrame(Game *game);
+void UpdateDrawFrame(Game::Game *game);
 
 int main() {
 
   std::srand(time(NULL));
 
-  Game game;
-  InitWindow(screenWidth, screenHeight, "Idle Game");
+  Game::Game game;
+  InitWindow(Game::screenWidth, Game::screenHeight, "Idle Game");
   SetTargetFPS(60);
   while (!WindowShouldClose()) {
 
@@ -41,17 +24,17 @@ int main() {
   return 0;
 }
 
-void UpdateDrawFrame(Game *game) {
+void UpdateDrawFrame(Game::Game *game) {
 
   BeginDrawing();
 
   ClearBackground(RAYWHITE);
 
   DrawText("Idle Game", 290, 20, 20, GRAY);
-  DrawRectangleV(gameArenaLoc, gameArenaSize, BLACK);
-  DrawRectangleLinesEx(arenaEdgeLine, 2.0f, GRAY);
+  DrawRectangleV(Game::gameArenaLoc, Game::gameArenaSize, BLACK);
+  DrawRectangleLinesEx(Game::arenaEdgeLine, 2.0f, GRAY);
 
-  BeginMode2D(camera);
+  BeginMode2D(Game::camera);
 
   // Tower
   DrawCircleLines(game->tower.pos.x, game->tower.pos.y, game->tower.towerRadius,
@@ -71,8 +54,10 @@ void UpdateDrawFrame(Game *game) {
     DrawCircleV(bullet.pos, bullet.radius, bullet.color);
   }
 
-  DrawText(std::to_string(game->tower.hp).c_str(), 2000, -2900, 300, WHITE);
-  DrawText(std::to_string(game->cash).c_str(), -2900, -2900, 300, WHITE);
+  DrawText(std::to_string(game->tower.hp).c_str(), Game::gameArenaXMax * 2 / 3,
+           Game::gameArenaYMin + 100, 300, WHITE);
+  DrawText(std::to_string(game->cash).c_str(), Game::gameArenaXMin + 100,
+           Game::gameArenaYMin + 100, 300, WHITE);
 
   EndMode2D();
   EndDrawing();
