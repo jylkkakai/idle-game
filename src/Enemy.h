@@ -19,7 +19,7 @@ public:
   Color getColor();
   void render();
   void hit(int hp);
-  int getDrop();
+  float getDrop();
   EnemyType getType();
 
 private:
@@ -31,7 +31,7 @@ private:
   float m_collisionRadius;
   float m_speed;
   Color m_color;
-  int m_drop;
+  float m_drop;
   int m_framesToRemove;
 };
 #endif // !ENEMY_H

@@ -34,6 +34,8 @@ void UpdateDrawFrame(Game::Game *game) {
   DrawRectangleV(Game::gameArenaLoc, Game::gameArenaSize, BLACK);
   DrawRectangleLinesEx(Game::arenaEdgeLine, 2.0f, GRAY);
 
+  game->weapon.renderButton(game->cash);
+
   BeginMode2D(Game::camera);
 
   // Tower
@@ -56,7 +58,7 @@ void UpdateDrawFrame(Game::Game *game) {
 
   DrawText(std::to_string(int(game->tower.hp)).c_str(),
            Game::gameArenaXMax - 500, Game::gameArenaYMin + 100, 300, WHITE);
-  DrawText(std::to_string(game->cash).c_str(), Game::gameArenaXMin + 100,
+  DrawText(std::to_string(int(game->cash)).c_str(), Game::gameArenaXMin + 100,
            Game::gameArenaYMin + 100, 300, WHITE);
   DrawText(("Level " + std::to_string(game->currentLevel)).c_str(), -500,
            Game::gameArenaYMin + 100, 300, WHITE);

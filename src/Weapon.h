@@ -5,28 +5,28 @@
 
 class WeaponClickable {
 public:
-  // WeaponClickable();
-
   void update();
-  bool isHovered();
+  void buyWeaponUpdate();
+  bool isArenaHovered();
+  bool isButtonHovered();
   bool isBulletReady();
   int getDp();
   Vector2 getPos();
   Color getColor();
   Bullet getBullet(Vector2 target);
+  float getWeaponUpdateCost();
+  void renderButton(float cash);
 
 private:
   int m_dp = 1;
   Vector2 m_pos = {0, 0};
   Color m_color = WHITE;
   bool m_bulletReady = false;
-  bool m_isHovered = false;
+  bool m_isArenaHovered = false;
+  bool m_isButtonHovered = false;
+  float m_weaponUpdateCost = 100.0;
 
   bool isMouseOnArena();
+  bool isMouseOnButton();
 };
-
-// WeaponClickable::WeaponClickable() {}
-
-// WeaponClickable::~WeaponClickable() {}
-
 #endif // !WEAPON_H

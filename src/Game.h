@@ -34,7 +34,7 @@ constexpr int gameArenaYMax = gameArenaHeight - gameArenaHeight / 2;
 
 struct Game {
 
-  int cash = 0;
+  float cash = 0.0;
   int currentLevel = 1;
   int passedLevel = 0;
   int maxEnemies = 10;

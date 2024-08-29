@@ -1,6 +1,7 @@
 #include "Enemy.h"
 #include "raylib.h"
 #include <cassert>
+#include <iostream>
 #include <raymath.h>
 
 Enemy::Enemy(EnemyType type, int level) : m_type(type) {
@@ -14,14 +15,15 @@ Enemy::Enemy(EnemyType type, int level) : m_type(type) {
     m_speed = 5.0f;
     m_framesToRemove = 10;
     m_color = YELLOW;
-    m_maxHp = 10 * pow(1.1, level - 1);
+    m_maxHp = 10.0 * pow(1.1, level - 1);
     m_hp = m_maxHp;
-    m_drop = 2;
+    m_drop = 2.0 * pow(1.2, level - 1);
     break;
   default:
     assert(!"Unreachable!");
     break;
   }
+  std::cout << m_drop << std::endl;
 
   int randVal = (rand() % (6000 - ENEMY_SIZE_X_COMMON));
   int side = randVal % 4;
@@ -88,9 +90,9 @@ void Enemy::render() {
   }
 }
 
-int Enemy::getDrop() {
-  int drop = m_drop;
-  m_drop = 0;
+float Enemy::getDrop() {
+  float drop = m_drop;
+  m_drop = 0.0;
   return drop;
 }
 

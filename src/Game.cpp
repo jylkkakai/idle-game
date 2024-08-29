@@ -75,7 +75,8 @@ void Game::Game::update() {
       enemies.erase(it);
     } else {
       if (it->getType() == EnemyType::DESTROYED) {
-        cash += it->getDrop();
+        float drop = it->getDrop();
+        cash += drop;
       }
       it++;
     }
@@ -93,6 +94,13 @@ void Game::Game::update() {
   }
 
   weapon.update();
+
+  if (cash >= weapon.getWeaponUpdateCost() && weapon.isButtonHovered() &&
+      IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+    cash -= weapon.getWeaponUpdateCost();
+    weapon.buyWeaponUpdate();
+  }
+
   int nearest =
       findNearestEnemyInsideVision(tower, enemies, tower.visionRadius);
   if (nearest >= 0 && weapon.isBulletReady()) {
@@ -111,7 +119,7 @@ void Game::Game::resetLevel() {
       currentLevel > passedLevel) {
     passedLevel = currentLevel;
     currentLevel++;
-    std::cout << passedLevel << std::endl;
+    cash += currentLevel * 50;
   }
   tower.hp = 50;
   numOfEnemies = 0;
