@@ -42,6 +42,7 @@ struct Game {
   Tower tower;
   std::vector<Enemy> enemies;
   WeaponClickable weapon;
+  WeaponAutomatic weaponAuto;
   std::vector<Bullet> bullets;
 
   void init();

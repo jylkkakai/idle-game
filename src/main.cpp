@@ -35,6 +35,7 @@ void UpdateDrawFrame(Game::Game *game) {
   DrawRectangleLinesEx(Game::arenaEdgeLine, 2.0f, GRAY);
 
   game->weapon.renderButton(game->cash);
+  game->weaponAuto.renderButton(game->cash);
 
   BeginMode2D(Game::camera);
 

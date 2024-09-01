@@ -94,17 +94,26 @@ void Game::Game::update() {
   }
 
   weapon.update();
+  weaponAuto.update();
 
   if (cash >= weapon.getWeaponUpdateCost() && weapon.isButtonHovered() &&
       IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
     cash -= weapon.getWeaponUpdateCost();
     weapon.buyWeaponUpdate();
   }
+  if (cash >= weaponAuto.getWeaponUpdateCost() &&
+      weaponAuto.isButtonHovered() && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+    cash -= weaponAuto.getWeaponUpdateCost();
+    weaponAuto.buyWeaponUpdate();
+  }
 
   int nearest =
       findNearestEnemyInsideVision(tower, enemies, tower.visionRadius);
   if (nearest >= 0 && weapon.isBulletReady()) {
     bullets.push_back(weapon.getBullet(enemies[nearest].getPosition()));
+  }
+  if (nearest >= 0 && weaponAuto.isBulletReady()) {
+    bullets.push_back(weaponAuto.getBullet(enemies[nearest].getPosition()));
   }
 
   if (tower.hp <= 0 || (numOfEnemies == maxEnemies && enemies.empty())) {
@@ -114,6 +123,7 @@ void Game::Game::update() {
   }
   frameCounter++;
 }
+
 void Game::Game::resetLevel() {
   if (numOfEnemies == maxEnemies && enemies.empty() &&
       currentLevel > passedLevel) {

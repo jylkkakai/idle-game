@@ -17,13 +17,13 @@ Enemy::Enemy(EnemyType type, int level) : m_type(type) {
     m_color = YELLOW;
     m_maxHp = 10.0 * pow(1.1, level - 1);
     m_hp = m_maxHp;
-    m_drop = 2.0 * pow(1.2, level - 1);
+    m_drop = 12.0 * pow(1.2, level - 1);
     break;
   default:
     assert(!"Unreachable!");
     break;
   }
-  std::cout << m_drop << std::endl;
+  // std::cout << m_drop << std::endl;
 
   int randVal = (rand() % (6000 - ENEMY_SIZE_X_COMMON));
   int side = randVal % 4;
