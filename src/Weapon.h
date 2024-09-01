@@ -7,7 +7,7 @@ class WeaponClickable {
 public:
   void update();
   void buyWeaponUpdate();
-  // bool isArenaHovered();
+  bool isArenaHovered();
   bool isButtonHovered();
   bool isBulletReady();
   // int getDp();

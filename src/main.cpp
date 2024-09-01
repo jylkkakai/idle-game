@@ -34,6 +34,12 @@ void UpdateDrawFrame(Game::Game *game) {
   DrawRectangleV(Game::gameArenaLoc, Game::gameArenaSize, BLACK);
   DrawRectangleLinesEx(Game::arenaEdgeLine, 2.0f, GRAY);
 
+  if (game->weapon.isButtonHovered() || game->weapon.isArenaHovered() ||
+      game->weaponAuto.isButtonHovered())
+    SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
+  else
+    SetMouseCursor(MOUSE_CURSOR_ARROW);
+
   game->weapon.renderButton(game->cash);
   game->weaponAuto.renderButton(game->cash);
 

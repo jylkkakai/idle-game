@@ -21,18 +21,7 @@ bool WeaponClickable::isMouseOnButton() {
 void WeaponClickable::update() {
   m_isArenaHovered = isMouseOnArena();
   m_isButtonHovered = isMouseOnButton();
-
-  if (m_isArenaHovered || m_isButtonHovered)
-    SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
-  else
-    SetMouseCursor(MOUSE_CURSOR_ARROW);
-
   m_bulletReady = (m_isArenaHovered && IsMouseButtonPressed(MOUSE_BUTTON_LEFT));
-
-  // Vector2 mousePos = GetMousePosition();
-  // if (cash >= m_weaponUpdateCost && mousePos.x > 50 && mousePos.x < 650 &&
-  //     mousePos.y > 50 && mousePos.y < 650) {
-  // }
 }
 
 Bullet WeaponClickable::getBullet(Vector2 target) {
@@ -63,7 +52,7 @@ void WeaponClickable::buyWeaponUpdate() {
 }
 
 float WeaponClickable::getWeaponUpdateCost() { return m_weaponUpdateCost; }
-// bool WeaponClickable::isArenaHovered() { return m_isArenaHovered; }
+bool WeaponClickable::isArenaHovered() { return m_isArenaHovered; }
 bool WeaponClickable::isButtonHovered() { return m_isButtonHovered; }
 bool WeaponClickable::isBulletReady() { return m_bulletReady; }
 // int WeaponClickable::getDp() { return m_dp; }
@@ -81,11 +70,6 @@ void WeaponAutomatic::update() {
   static int frameCounter = 0;
   static int framesToBullet = 60;
   m_isButtonHovered = isMouseOnButton();
-
-  if (m_isButtonHovered)
-    SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
-  else
-    SetMouseCursor(MOUSE_CURSOR_ARROW);
 
   if (frameCounter >= framesToBullet) {
     m_bulletReady = true;
